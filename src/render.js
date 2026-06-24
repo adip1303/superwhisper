@@ -18,7 +18,7 @@ export const statusCopy = {
   },
   [RecordingState.ENDED]: {
     eyebrow: 'Complete',
-    title: 'This is working',
+    title: 'Pause and resume without losing what you said.',
     detail: 'Committed from the active recording buffer.',
   },
 };
