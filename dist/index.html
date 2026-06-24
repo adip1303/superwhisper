@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interactive pause recording prototype for Superwhisper on Windows."
+    />
+    <title>Superwhisper Pause Recording Prototype</title>
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+    <script type="module" crossorigin src="/assets/index-D5s0VcCu.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B9wNT85O.css">
+  </head>
+  <body>
+    <main class="stage" aria-label="Superwhisper Windows recording demo">
+      <article class="sw-panel expanded-panel" data-view="expanded" aria-live="polite">
+        <button
+          class="expanded-panel__collapse"
+          type="button"
+          data-view-action="collapse"
+          aria-label="Collapse panel"
+        >
+          <img src="/assets/collapse.svg" alt="" />
+        </button>
+
+        <div class="expanded-panel__voice-zone">
+          <div class="expanded-panel__idle-content">
+            <span class="expanded-panel__idle-label">Start Recording</span>
+            <kbd>Space</kbd>
+          </div>
+          <div class="expanded-waveform" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span>
+</div>
+          <p class="expanded-panel__result" data-result-title>This is working</p>
+        </div>
+
+        <div class="expanded-panel__footer">
+          <div class="expanded-panel__mode">
+            <img src="/assets/mic.svg" alt="" />
+            <span>Default</span>
+          </div>
+          <div class="expanded-panel__controls">
+  <div class="ctrl-group ctrl-group--idle">
+    <div class="ctrl-pair">
+      <span data-action="Space">Record</span>
+      <kbd data-action="Space">Space</kbd>
+    </div>
+    <div class="ctrl-pair">
+      <span data-action="Escape">Close</span>
+      <kbd data-action="Escape">Esc</kbd>
+    </div>
+  </div>
+  <div class="ctrl-group ctrl-group--recording">
+    <div class="ctrl-pair">
+      <span data-action="KeyP" class="expanded-panel__pause-label">Pause</span>
+      <span data-action="KeyP" class="expanded-panel__resume-label">Resume</span>
+      <kbd data-action="KeyP">P</kbd>
+    </div>
+    <div class="ctrl-pair">
+      <span data-action="Space">Stop</span>
+      <kbd data-action="Space">Space</kbd>
+    </div>
+    <div class="ctrl-pair">
+      <span data-action="Escape">Cancel</span>
+      <kbd data-action="Escape">Esc</kbd>
+    </div>
+  </div>
+</div>
+        </div>
+
+        <div class="render-data" aria-hidden="true">
+          <span data-state-eyebrow></span><span data-state-title></span>
+          <span data-state-detail></span><span data-result-eyebrow></span>
+          <span data-result-detail></span>
+        </div>
+      </article>
+
+      <div class="panel-container">
+      <article class="sw-panel mini-panel is-view-hidden" data-view="mini" aria-live="polite">
+
+  <div class="mini-panel__item mini-panel__mode">
+    <div class="mini-panel__hover-pill"></div>
+    <img class="mini-panel__sparkle" src="/assets/sparkle.svg" alt="" />
+    <span class="mini-panel__active-logo" aria-hidden="true"></span>
+    <div class="mini-tooltip mini-tooltip--idle">
+      <span>Change mode</span>
+    </div>
+    <div class="mini-tooltip mini-tooltip--recording">
+      <span>Stop recording</span><kbd>Space</kbd>
+    </div>
+    <div class="mini-tooltip mini-tooltip--paused">
+      <span>Stop recording</span><kbd>Space</kbd>
+    </div>
+  </div>
+
+  <div class="mini-panel__item mini-panel__center">
+    <div class="mini-panel__hover-pill"></div>
+    <img class="mini-panel__logo" src="/assets/logo.svg" alt="" />
+    <div class="mini-panel__dots" aria-hidden="true">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="mini-tooltip mini-tooltip--idle">
+      <span>Start recording</span><kbd>Space</kbd>
+    </div>
+    <div class="mini-tooltip mini-tooltip--recording">
+      <span>Stop recording</span><kbd>Space</kbd>
+    </div>
+  </div>
+
+  <div class="mini-panel__item mini-panel__actions">
+    <div class="mini-panel__hover-pill"></div>
+    <button
+      class="mini-panel__expand"
+      type="button"
+      data-view-action="expand"
+      aria-label="Expand panel"
+    >
+      <img class="mini-panel__expand-icon" src="/assets/expand.svg" alt="" />
+    </button>
+    <div class="mini-panel__record-control" aria-hidden="true">
+      <i class="mini-panel__pause-icon" data-lucide="circle-pause"></i>
+      <img class="mini-panel__resume-icon" src="/assets/play.svg" alt="" />
+    </div>
+    <div class="mini-tooltip mini-tooltip--idle">
+      <span>Expand window</span>
+    </div>
+    <div class="mini-tooltip mini-tooltip--recording">
+      <span>Pause</span><kbd>P</kbd>
+    </div>
+    <div class="mini-tooltip mini-tooltip--paused">
+      <span>Resume</span><kbd>P</kbd>
+    </div>
+  </div>
+
+  <div class="render-data" aria-hidden="true">
+    <span data-state-eyebrow></span><span data-state-title></span>
+    <span data-state-detail></span><span data-result-eyebrow></span>
+    <span data-result-title></span><span data-result-detail></span>
+  </div>
+
+</article>
+<article
+        class="sw-panel collapsed-panel is-view-hidden"
+        data-view="collapsed"
+        aria-live="polite"
+      >
+        <div class="collapsed-waveform" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+        <div class="render-data" aria-hidden="true">
+          <span data-state-eyebrow></span><span data-state-title></span>
+          <span data-state-detail></span><span data-result-eyebrow></span>
+          <span data-result-title></span><span data-result-detail></span>
+        </div>
+      </article>
+      </div>
+    </main>
+
+  </body>
+</html>
