@@ -577,6 +577,7 @@ body::before {
   overflow: hidden;
 }
 
+
 [data-view="collapsed"].is-recording,
 [data-view="collapsed"].is-paused {
   display: grid;

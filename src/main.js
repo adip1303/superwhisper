@@ -37,9 +37,33 @@ function setRecordingState(nextState) {
   if ((prevRecording === 'idle' || prevRecording === 'ended') && 
       nextRecording === 'recording') {
 
-    /* If in expanded or collapsed view, draw immediately 
-       so waveform appears without delay */
-    if (viewMode !== 'mini') {
+    if (viewMode === 'collapsed') {
+      const collapsedPanel = document.querySelector('[data-view="collapsed"]');
+      collapsedPanel.classList.add('is-morph-to-recording');
+
+      setTimeout(() => {
+        draw();
+        collapsedPanel.classList.remove('is-morph-to-recording');
+
+        const waveform = collapsedPanel.querySelector('.collapsed-waveform');
+        waveform.style.opacity = '0';
+        waveform.style.transition = 'none';
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            waveform.style.transition = 'opacity 100ms ease';
+            waveform.style.opacity = '1';
+            setTimeout(() => {
+              waveform.style.opacity = '';
+              waveform.style.transition = '';
+            }, 100);
+          });
+        });
+      }, 300);
+      return;
+    }
+
+    if (viewMode === 'expanded') {
       draw();
       return;
     }
@@ -69,8 +93,27 @@ function setRecordingState(nextState) {
   if ((prevRecording === 'recording' || prevRecording === 'paused') &&
       (nextRecording === 'idle' || nextRecording === 'ended')) {
 
-    /* If in expanded or collapsed view, draw immediately */
-    if (viewMode !== 'mini') {
+    if (viewMode === 'collapsed') {
+      const collapsedPanel = document.querySelector('[data-view="collapsed"]');
+      const waveform = collapsedPanel.querySelector('.collapsed-waveform');
+
+      waveform.style.transition = 'opacity 100ms ease';
+      waveform.style.opacity = '0';
+
+      setTimeout(() => {
+        waveform.style.opacity = '';
+        waveform.style.transition = '';
+        collapsedPanel.classList.add('is-morph-to-idle');
+
+        setTimeout(() => {
+          draw();
+          collapsedPanel.classList.remove('is-morph-to-idle');
+        }, 300);
+      }, 100);
+      return;
+    }
+
+    if (viewMode === 'expanded') {
       draw();
       return;
     }
@@ -189,6 +232,13 @@ function setViewMode(nextViewMode) {
 
 function handleKeyDown(event) {
   if (event.code === 'Space') event.preventDefault();
+  if (event.repeat) return;
+
+  if (event.code === 'Escape' && viewMode === 'expanded') {
+    setViewMode('collapsed');
+    return;
+  }
+
   setRecordingState(transition(recordingState, event.code));
 }
 
@@ -208,25 +258,6 @@ document.querySelectorAll('[data-view-action]').forEach((control) => {
   control.addEventListener('keydown', handleViewAction);
 });
 
-document.querySelector('[data-view="collapsed"]')
-  .addEventListener('mouseenter', () => {
-    const isRecordingOrPaused =
-      recordingState.recording === 'recording' ||
-      recordingState.recording === 'paused';
-
-    if (isRecordingOrPaused) return;
-    if (viewMode !== 'collapsed') return;
-
-    viewMode = 'mini';
-    draw();
-
-    const miniPanel = document.querySelector('[data-view="mini"]');
-    miniPanel.classList.add('is-entering');
-
-    miniPanel.addEventListener('animationend', () => {
-      miniPanel.classList.remove('is-entering');
-    }, { once: true });
-  });
 
 document.querySelector('[data-view="collapsed"]')
   .addEventListener('mouseenter', () => {
@@ -292,6 +323,25 @@ document.querySelector('[data-view="collapsed"]')
     }, 450);
   });
 
+document.querySelector('.panel-container')
+  .addEventListener('mouseenter', () => {
+    const isRecordingOrPaused =
+      recordingState.recording === 'recording' ||
+      recordingState.recording === 'paused';
+
+    if (isRecordingOrPaused) return;
+    if (viewMode !== 'collapsed') return;
+
+    viewMode = 'mini';
+    draw();
+
+    const miniPanel = document.querySelector('[data-view="mini"]');
+    miniPanel.classList.add('is-entering');
+
+    miniPanel.addEventListener('animationend', () => {
+      miniPanel.classList.remove('is-entering');
+    }, { once: true });
+  });
 document.querySelector('.panel-container')
   .addEventListener('mouseleave', (event) => {
     if (event.currentTarget.contains(event.relatedTarget)) return;
