@@ -1,3 +1,6 @@
+import { inject } from '@vercel/analytics';
+inject();
+
 import './style.css';
 import { initialState, transition } from './stateMachine.js';
 import { render } from './render.js';
@@ -68,7 +71,7 @@ function setRecordingState(nextState) {
       return;
     }
 
-    /* Mini view — run logo movement animation */
+    /* Mini view ï¿½ run logo movement animation */
     miniPanel.classList.remove('anim-to-recording');
     void miniPanel.offsetWidth;
     miniPanel.classList.add('anim-to-recording');
@@ -118,7 +121,7 @@ function setRecordingState(nextState) {
       return;
     }
 
-    /* Mini view — run logo movement animation */
+    /* Mini view ï¿½ run logo movement animation */
     miniPanel.classList.remove('anim-to-idle');
     void miniPanel.offsetWidth;
     miniPanel.classList.add('anim-to-idle');
@@ -149,7 +152,7 @@ function setViewMode(nextViewMode) {
 
     setTimeout(() => {
       /* Step 2: hide idle content via inline style BEFORE 
-         draw() — survives render() className rewrite */
+         draw() ï¿½ survives render() className rewrite */
       const expandedPanel = document.querySelector('[data-view="expanded"]');
       const idleContent = expandedPanel.querySelector('.expanded-panel__idle-content');
       idleContent.style.opacity = '0';
@@ -225,7 +228,7 @@ function setViewMode(nextViewMode) {
     return;
   }
 
-  /* All other view changes' — instant */
+  /* All other view changes' ï¿½ instant */
   viewMode = nextViewMode;
   draw();
 }
